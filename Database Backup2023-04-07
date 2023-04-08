@@ -1,0 +1,178 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Apr 06, 2023 at 11:25 PM
+-- Server version: 5.5.68-MariaDB
+-- PHP Version: 8.1.16
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `in2018g10`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Blanks`
+--
+
+CREATE TABLE `Blanks` (
+  `BlankID` int(10) NOT NULL,
+  `Type` varchar(255) NOT NULL,
+  `Assigned` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `BlankStock`
+--
+
+CREATE TABLE `BlankStock` (
+  `BlankStockID` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Currency`
+--
+
+CREATE TABLE `Currency` (
+  `CurrencyName` varchar(255) NOT NULL,
+  `Type` int(10) NOT NULL,
+  `Amount` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `CustomerID` varchar(50) NOT NULL,
+  `CustomerName` varchar(255) NOT NULL,
+  `CustomerEmail` varchar(255) NOT NULL,
+  `CustomerContactNumber` int(20) NOT NULL,
+  `CustomerAddress` varchar(255) NOT NULL,
+  `PaymentInformation` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`CustomerID`, `CustomerName`, `CustomerEmail`, `CustomerContactNumber`, `CustomerAddress`, `PaymentInformation`) VALUES
+('[DHQ623]', '[tom Mac]', '[t.mac@gmail.com]', 0, '[30 Ingram Road, Gillingham\",ME7 1SD]', '[cash]'),
+('[DHY123]', '[Romeo Fdes]', '[r.fdes@gmail.com]', 0, '[\"69 Chedworth Road, Liverpool\",L14 7PW]', '[cash]'),
+('[REW323]', '[Sam Mendes]', '[S.mendes@gmail.com]', 0, '[\"5 Derwent Park Close, Sutton On Derwent\",YO41 4BQ]', '[cash]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ExchangeRate`
+--
+
+CREATE TABLE `ExchangeRate` (
+  `CurrentAmount` int(10) NOT NULL,
+  `ID` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Login`
+--
+
+CREATE TABLE `Login` (
+  `Username` varchar(30) NOT NULL,
+  `Password` varchar(25) NOT NULL,
+  `UserType` varchar(255) NOT NULL,
+  `ID` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Login`
+--
+
+INSERT INTO `Login` (`Username`, `Password`, `UserType`, `ID`) VALUES
+('[admin165]', '[Pass123]', '[Admin]', 0),
+('[admin005]', '[Pass456]', '[Admin]', 0),
+('[Advisor232]', '[Pass890]', '[Advisor]', 0),
+('[Advisor059]', '[Pass414]', '[Advisor]', 0),
+('[OfficeManager289]', '[Passw1278]', '[Advisor]', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TravelAgent`
+--
+
+CREATE TABLE `TravelAgent` (
+  `AgentID` int(10) NOT NULL,
+  `AgentName` char(25) NOT NULL,
+  `AgentAddress` varchar(255) NOT NULL,
+  `AgentEmail` varchar(255) NOT NULL,
+  `AgentContactNumber` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `Blanks`
+--
+ALTER TABLE `Blanks`
+  ADD PRIMARY KEY (`BlankID`);
+
+--
+-- Indexes for table `BlankStock`
+--
+ALTER TABLE `BlankStock`
+  ADD PRIMARY KEY (`BlankStockID`);
+
+--
+-- Indexes for table `Currency`
+--
+ALTER TABLE `Currency`
+  ADD PRIMARY KEY (`CurrencyName`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`CustomerID`);
+
+--
+-- Indexes for table `TravelAgent`
+--
+ALTER TABLE `TravelAgent`
+  ADD PRIMARY KEY (`AgentID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Blanks`
+--
+ALTER TABLE `Blanks`
+  MODIFY `BlankID` int(10) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

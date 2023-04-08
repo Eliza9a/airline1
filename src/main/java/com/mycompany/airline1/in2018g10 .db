@@ -1,0 +1,469 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Apr 08, 2023 at 09:33 AM
+-- Server version: 5.5.68-MariaDB
+-- PHP Version: 8.1.16
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `in2018g10`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `BlankStock`
+--
+
+CREATE TABLE `BlankStock` (
+  `BlankID` varchar(15) NOT NULL DEFAULT '',
+  `BlankSold` int(25) NOT NULL,
+  `StaffID` varchar(50) NOT NULL,
+  `DateReceived` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `BlankStock`
+--
+
+INSERT INTO `BlankStock` (`BlankID`, `BlankSold`, `StaffID`, `DateReceived`) VALUES
+('10100000001 ', 0, '211', '2019-07-09'),
+('101000000020 ', 1, '211', '2019-07-09'),
+('101000000026 ', 0, '211', '2019-07-09'),
+('101000000032 ', 1, '211', '2019-07-09'),
+('10100000004 ', 0, '211', '2019-07-09'),
+('101000000046 ', 0, '211', '2019-07-09'),
+('101000000049 ', 1, '211', '2019-07-09'),
+('10100000009 ', 1, '211', '2019-07-09'),
+('201000000001', 0, '250', '2019-06-03'),
+('201000000002', 1, '250', '2019-06-03'),
+('201000000005', 0, '250', '2019-06-03'),
+('201000000010', 1, '250', '2019-06-03'),
+('420000000015', 1, '250', '2019-05-08'),
+('42000000002', 1, '250', '2019-05-08'),
+('420000000031', 0, '211', '2019-05-08'),
+('420000000038', 1, '211', '2019-05-08'),
+('420000000046', 1, '211', '2019-05-08'),
+('42000000005', 0, '250', '2019-05-08'),
+('44000000001', 1, '45', '2019-04-03'),
+('440000000013', 0, '34', '2022-04-06'),
+('440000000015', 1, '34', '2022-04-06'),
+('44000000002', 0, '12', '2022-04-06'),
+('44000000004', 1, '98', '2022-05-13'),
+('44000000006', 1, '34', '2019-04-01'),
+('44000000007', 1, '345', '2019-04-01'),
+('444000000010', 0, '250', '2019-04-01'),
+('444000000015', 0, '250', '2019-04-01'),
+('444000000016', 2, '250', '2019-04-01'),
+('444000000023', 1, '211', '2019-04-01'),
+('444000000038', 1, '211', '2019-04-01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Commision`
+--
+
+CREATE TABLE `Commision` (
+  `Date` date NOT NULL,
+  `BlankType` varchar(255) NOT NULL,
+  `Rate` double(20,0) NOT NULL,
+  `CommisionId` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Commision`
+--
+
+INSERT INTO `Commision` (`Date`, `BlankType`, `Rate`, `CommisionId`) VALUES
+('2019-05-08', '420', 6, 'YU05'),
+('2019-07-09', '101', 4, 'YU45'),
+('2019-06-03', '201', 5, 'YU55'),
+('2023-04-05', '444', 9, 'YU78'),
+('2019-04-10', '440', 9, 'YU79');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `CustomerID` int(50) NOT NULL,
+  `CustomerName` varchar(255) NOT NULL,
+  `CustomerEmail` varchar(255) NOT NULL,
+  `CustomerContactNumber` varchar(20) NOT NULL,
+  `CustomerAddress` varchar(255) NOT NULL,
+  `PaymentInformation` varchar(255) NOT NULL,
+  `CustomerType` varchar(255) NOT NULL,
+  `DiscountPlan` varchar(255) NOT NULL,
+  `PaymentID` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`CustomerID`, `CustomerName`, `CustomerEmail`, `CustomerContactNumber`, `CustomerAddress`, `PaymentInformation`, `CustomerType`, `DiscountPlan`, `PaymentID`) VALUES
+(123, 'Romeo Fdes', 'r.fdes@gmail.com', '07899457736', '69 Chedworth Road, Liverpool, L14 7PW', 'card', 'Regular Customer', '', 0),
+(323, 'Sam Mendes', 'S.mendes@gmail.com', '02045789641', '5 Derwent Park Close, Sutton On Derwent, YO41 4BQ', 'Cash', 'Valued Customer', '', 0),
+(386, 'David Dodson', 'd.dodson@outlook.com', '07863457704', '7 Brookside, Watlington, OX49 5AQ', 'Card', 'Valued Customer', '', 0),
+(456, 'Chris Smart', 'C.smart@yahoo.com', '07863457704', 'Flat 10, 107 London Road, Brentford,  TW8 8JS', 'Card', 'Valued Customer', '1%', 0),
+(606, 'Sarah Broklehust', 's.broklehust@outlook.com', '07855389754', '74 Saxon Way, Waterbeach, CB25 9RL', 'Card', 'Valued Customer', '2%', 0),
+(623, 'Tom Mac', 't.mac@gmail.com', '07588426698', '30 Ingram Road, Gillingham, ME7 1SD', 'card', 'Regular Customer', '', 0),
+(694, 'Domnic Beatty', 'd.beatty@hotmail.com', '07855389700', '210 Old Chester Road, Birkenhead, CH42 3TE', 'Cash', 'Regular Customer', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ExchangeRate`
+--
+
+CREATE TABLE `ExchangeRate` (
+  `CurrencyName` varchar(255) NOT NULL,
+  `RateinUSD` decimal(20,4) NOT NULL,
+  `Country` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ExchangeRate`
+--
+
+INSERT INTO `ExchangeRate` (`CurrencyName`, `RateinUSD`, `Country`) VALUES
+('AED', '0.2720', 'United Arab Emirates'),
+('AUD', '0.6670', 'Australia'),
+('BRL', '0.1975', 'Brazil'),
+('CAD', '0.7400', 'Canada'),
+('EUR', '1.0910', 'Germany'),
+('GBP', '1.2420', 'United Kingdom'),
+('HKD', '0.1270', 'China'),
+('INR', '0.0120', 'India'),
+('MXN', '0.0550', 'Mexico'),
+('RUB', '0.0120', 'Russia'),
+('USD', '1.0000', 'USA');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login`
+--
+
+CREATE TABLE `login` (
+  `ID` varchar(15) NOT NULL,
+  `Username` varchar(255) NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  `UserType` varchar(255) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `ContactNumber` varchar(255) NOT NULL,
+  `Address` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`ID`, `Username`, `Password`, `UserType`, `Email`, `ContactNumber`, `Address`) VALUES
+('12', 'Lola', '81dc9bdb52d04dc20036dbd8313ed055', 'Travel Advisor', 'lola45@hotmail.co.uk', '07454875485', '667 StreetName '),
+('204', 'OfficeManager209', 'Passw1222', 'Manager', 'r.tommy@gmail.com', '07844968745', '3 Wellington Road, Ashford, TW15 3RN'),
+('211', 'advisor232', 'Gnasher', 'Travel Advisor', 'd.menace@yahoo.con', '07855442200', '14 Church View, Wallsend, NE28 6PS'),
+('214', 'OfficeManager289', 'Passw1278', 'Manager', 's.mic@hotmail.com', '07588770014', '199 Old Bedford Road, Luton,LU2 7EH'),
+('220', 'OfficeManager209', 'NotiGirl', 'Manager', 'm.minx@gmail.com', '02045789645', '14 Church View, Wallsend, NE28 6PS'),
+('240', 'admin005', 'Pass456', 'Administrator', 'd.antao@outlook.com', '07588459963', 'Owls Nest, Leyburn Road, Wensley, DL8 4HR'),
+('250', 'advisor059', 'PinkMobile', 'Travel Advisor', 'p.pitstop@hotmail.com', '02045896354', '57 Reservoir Road, Erdington, B23 6DG'),
+('320', 'admin165', '\r\nLiesaLot', 'Administrator', 'a.daley@gmail.com', '02056847595', '6 Sadlers Row, Lytham St.Annes, FY8 4UH'),
+('34', 'ana', '81dc9bdb52d04dc20036dbd8313ed055', 'Travel Advisor', 'wgr@gmail.com', '07535255453', 'Str VDgs, No 577, postcode 7676r'),
+('454', 'hfhf', '47731f3013544031ec7672c6d80c9519', 'Travel Advisor', 'gdgrg', 'gdgr', 'grtgrg'),
+('98', 'iuku', '49f68a5c8493ec2c0bf489821c21fc3b', 'Travel Advisor', 'jhb', 'jhjh', 'jhhjh'),
+('bdgdegd', 'andrew', 'b233df349d91aabcfd46edbefbac5069', 'Travel Advisor', 'de@yahoo.com', '07583758354', '76 Portland Street'),
+('bsrbsrd', 'advisor435', 'bsrbsr', 'Travel Advisor', 'bsr@email.com', '07385738457', '344 Rowning Avenue'),
+('sgs', 'advisor54', '96340dfc8fedd91c2e9737f010fdd2e7', 'Travel Advisor', 'sgtg@yahoo.com', '07356756475', '89 Edw Road'),
+('vsvs', 'rsb dvevervd', 'b6a10c9d63a7431cc48b827cde02a341', 'Travel Advisor', 'veve', 'vrved', 'vefve');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Office Manager`
+--
+
+CREATE TABLE `Office Manager` (
+  `ManagerID` int(10) NOT NULL,
+  `ManagerName` char(25) NOT NULL,
+  `ManagerAddress` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Office Manager`
+--
+
+INSERT INTO `Office Manager` (`ManagerID`, `ManagerName`, `ManagerAddress`) VALUES
+(204, 'Ricardo Tommy', '3 Wellington Road, Ashford, TW15 3RN'),
+(214, 'Savio Mic', '199 Old Bedford Road, Luton, LU2 7EH'),
+(220, 'Minnie Minx', '14 Church View, Wallsend, NE28 6PS'),
+(223, 'Jack Thomson', '70 Fifth Avenue, Edwinstowe,NG21 9PL'),
+(333, 'Charles Brown', '3 Bron Eryri, Upper Llandwrog,LL54 7BG'),
+(427, 'Agata Brown', '14 Edgeware Grove, Wigan,WN3 6EF');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Payment`
+--
+
+CREATE TABLE `Payment` (
+  `PaymentID` varchar(15) NOT NULL,
+  `BlankNumber` double NOT NULL,
+  `ExchangeRate` varchar(10) NOT NULL,
+  `CommisionRate` varchar(10) NOT NULL,
+  `Type` varchar(50) NOT NULL,
+  `date` date NOT NULL,
+  `taxes` double(25,5) NOT NULL,
+  `otherTaxes` double(55,3) NOT NULL,
+  `isRefunded` tinyint(1) NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `ExpDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Refund`
+--
+
+CREATE TABLE `Refund` (
+  `RefundDate` date NOT NULL,
+  `RefundAmount` int(10) NOT NULL,
+  `RefundType` varchar(255) NOT NULL,
+  `RefundID` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Refund`
+--
+
+INSERT INTO `Refund` (`RefundDate`, `RefundAmount`, `RefundType`, `RefundID`) VALUES
+('2023-04-02', 1500, 'debit card', 'REF047'),
+('2023-02-10', 2100, 'credit card', 'REF123'),
+('2023-03-28', 875, 'credit card', 'REF247'),
+('2023-03-08', 1700, 'credit card', 'REF340'),
+('2023-03-22', 250, 'debit card', 'REF642');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Sales`
+--
+
+CREATE TABLE `Sales` (
+  `SalesID` int(10) NOT NULL,
+  `Cash` int(10) NOT NULL,
+  `Card` int(10) NOT NULL,
+  `SalesType` varchar(255) NOT NULL,
+  `currency` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Sales`
+--
+
+INSERT INTO `Sales` (`SalesID`, `Cash`, `Card`, `SalesType`, `currency`) VALUES
+(1, 345, 0, 'Domestic', 1),
+(2, 0, 147, 'Domestic', 0),
+(3, 0, 1500, 'Interline', 0),
+(4, 0, 785, 'Interline', 0),
+(5, 1599, 0, 'Interline', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `System Administrator`
+--
+
+CREATE TABLE `System Administrator` (
+  `SystemAdminID` int(10) NOT NULL,
+  `SystemAdminName` char(25) NOT NULL,
+  `SystemAdminAddress` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `System Administrator`
+--
+
+INSERT INTO `System Administrator` (`SystemAdminID`, `SystemAdminName`, `SystemAdminAddress`) VALUES
+(241, 'Stanley Puere', '16 St Matthias Grove, Leeds, LS4 2DU'),
+(320, 'Arthur Daley', '11 Pickford Road, St Albans, AL1 5JH'),
+(322, 'Ajayi Obafer', '1 Quarry Road, Sandford, BS25 5RL'),
+(325, 'Domnic Antao', 'Owls Nest, Leyburn Road, Wensley, DL8 4HR'),
+(389, 'Bina Dias', '2 Robins Close, Cheslyn Hay, WS6 7JR'),
+(569, 'Janet Eronica', '57 Reepham Road, Norwich, NR6 5LF');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Tickets`
+--
+
+CREATE TABLE `Tickets` (
+  `TicketID` varchar(255) NOT NULL,
+  `FlightNumber` float NOT NULL,
+  `Departure` varchar(255) NOT NULL,
+  `DepartureDateTime` datetime(6) NOT NULL,
+  `Destination` varchar(255) NOT NULL,
+  `ArrivalDateTime` datetime(6) NOT NULL,
+  `Price` int(11) NOT NULL,
+  `customerID` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Tickets`
+--
+
+INSERT INTO `Tickets` (`TicketID`, `FlightNumber`, `Departure`, `DepartureDateTime`, `Destination`, `ArrivalDateTime`, `Price`, `customerID`) VALUES
+('25789645', 780, 'London-Heathrow-LHR', '2023-03-31 06:18:39.166000', 'Cancun International-CUN ', '2023-04-01 02:18:39.000000', 1000, ''),
+('25789689', 732, 'London Luton-LTN', '2023-04-02 12:05:00.000000', 'Wroclaw-WRO', '2023-04-02 14:05:33.590000', 120, ''),
+('25789758961', 475, 'London Stansted-STN', '2023-04-01 02:10:09.000000', 'Oslo Torp-TRF', '2023-04-01 05:10:09.918000', 55, ''),
+('257897777', 785, 'Goa-GOI ', '2023-04-08 08:13:22.810000', 'Hamad International-DOH', '2023-04-08 11:13:22.017000', 1200, ''),
+('257897895', 222, 'Indira Gandhi International-DEL', '2023-03-29 22:16:17.947000', 'Oslo Gardermoen-OSL', '2023-03-29 01:16:17.672000', 1400, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Travel Advisor`
+--
+
+CREATE TABLE `Travel Advisor` (
+  `AdvisorID` int(10) NOT NULL,
+  `AdvisorName` char(25) NOT NULL,
+  `AdvisorPhoneNumber` varchar(255) NOT NULL,
+  `AdvisorEmail` varchar(255) NOT NULL,
+  `Address` varchar(255) NOT NULL,
+  `Surname` varchar(255) NOT NULL,
+  `Password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Travel Advisor`
+--
+
+INSERT INTO `Travel Advisor` (`AdvisorID`, `AdvisorName`, `AdvisorPhoneNumber`, `AdvisorEmail`, `Address`, `Surname`, `Password`) VALUES
+(211, 'Dennis', '\r\n07855442200\r\n', 'd.menace@yahoo.con', '14 Church View, Wallsend, NE28 6PS', 'Menace', 'Gnasher'),
+(250, 'Penelope', '02045896354\r\n', 'p.pitstop@hotmail.com\r\n', '57 Reservoir Road, Erdington, B23 6DG', 'Pitstop', 'PinkMobile'),
+(256, 'Gina', '07849654412', 'g.tim@gmail.com', '569 Felixstowe Road, Ipswich,IP3 8TE', 'Tims', 'abct2356'),
+(257, 'Tasha', '0855469935', 't.mac@gmail.com', 'Bryn Nantlech, Llanfairtalhaiarn,LL22 8TW', 'Mac', 'Psswedt'),
+(258, 'Ramson', '04877589963', 'r.mendes@gmail.com', '4 Ron Eryri, Upper Llandwrog, LL54 7BG', 'Mendes', 'Pass34567'),
+(380, 'Nar', '04788596654', 'n.pokrel@gmail.com', '66 Norman Road, Manchester, M14 5LA', 'Pokrel', 'Pss1589');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `BlankStock`
+--
+ALTER TABLE `BlankStock`
+  ADD PRIMARY KEY (`BlankID`);
+
+--
+-- Indexes for table `Commision`
+--
+ALTER TABLE `Commision`
+  ADD PRIMARY KEY (`CommisionId`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`CustomerID`),
+  ADD KEY `payIdFK` (`PaymentID`);
+
+--
+-- Indexes for table `ExchangeRate`
+--
+ALTER TABLE `ExchangeRate`
+  ADD PRIMARY KEY (`CurrencyName`);
+
+--
+-- Indexes for table `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `Office Manager`
+--
+ALTER TABLE `Office Manager`
+  ADD PRIMARY KEY (`ManagerID`);
+
+--
+-- Indexes for table `Refund`
+--
+ALTER TABLE `Refund`
+  ADD PRIMARY KEY (`RefundID`);
+
+--
+-- Indexes for table `Sales`
+--
+ALTER TABLE `Sales`
+  ADD PRIMARY KEY (`SalesID`);
+
+--
+-- Indexes for table `System Administrator`
+--
+ALTER TABLE `System Administrator`
+  ADD PRIMARY KEY (`SystemAdminID`);
+
+--
+-- Indexes for table `Tickets`
+--
+ALTER TABLE `Tickets`
+  ADD PRIMARY KEY (`TicketID`);
+
+--
+-- Indexes for table `Travel Advisor`
+--
+ALTER TABLE `Travel Advisor`
+  ADD PRIMARY KEY (`AdvisorID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Office Manager`
+--
+ALTER TABLE `Office Manager`
+  MODIFY `ManagerID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=428;
+
+--
+-- AUTO_INCREMENT for table `Sales`
+--
+ALTER TABLE `Sales`
+  MODIFY `SalesID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `System Administrator`
+--
+ALTER TABLE `System Administrator`
+  MODIFY `SystemAdminID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=570;
+
+--
+-- AUTO_INCREMENT for table `Travel Advisor`
+--
+ALTER TABLE `Travel Advisor`
+  MODIFY `AdvisorID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=260;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
