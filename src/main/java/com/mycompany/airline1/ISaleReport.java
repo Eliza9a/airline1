@@ -4,11 +4,18 @@
  */
 package com.mycompany.airline1;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.text.MessageFormat;
+
 /**
  *
  * @author airin
  */
 public class ISaleReport extends javax.swing.JFrame {
+
+    private String untilDate, sinceDate;
+    DefaultTableModel bigTableModel, smallTableModel;
 
     /**
      * Creates new form ISaleReport
@@ -223,13 +230,22 @@ public class ISaleReport extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void initBigTable() {}
+
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
-        // TODO add your handling code here:
+        sinceDate = sinceInput.getText();
+        untilDate = untilInput.getText();
+        initBigTable();
     }//GEN-LAST:event_viewButtonActionPerformed
 
     private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_printButtonActionPerformed
+        MessageFormat header = new MessageFormat("Global Sales Report Print");
+        MessageFormat footer = new MessageFormat("Page{0,number}");
+        try{
+            table.print(JTable.PrintMode.NORMAL, header, footer);
+        } catch (java.awt.print.PrinterException e){
+
+        }    }//GEN-LAST:event_printButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         dispose();
@@ -239,11 +255,9 @@ public class ISaleReport extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void sinceInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinceInputActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_sinceInputActionPerformed
 
     private void untilInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_untilInputActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_untilInputActionPerformed
 
     /**
