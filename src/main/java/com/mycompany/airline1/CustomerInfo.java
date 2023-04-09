@@ -64,7 +64,7 @@ public class CustomerInfo extends javax.swing.JFrame {
                     v[4] = (resultSet.getString("CustomerAddress"));
                     v[5] = (resultSet.getString("PaymentInformation"));
                     v[6] = (resultSet.getString("CustomerType"));
-                    v[7] = (resultSet.getDouble("DiscountPlan"));
+                    v[7] = (resultSet.getDouble("DiscountRate"));
                     v[8] = (resultSet.getString("PaymentID"));
 
                 }

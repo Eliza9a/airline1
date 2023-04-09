@@ -4,17 +4,28 @@
  */
 package com.mycompany.airline1;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author airin
  */
 public class CustomerInfoM extends javax.swing.JFrame {
 
+
+    private DefaultTableModel tableModel;
+    private int selectedRow;
     /**
      * Creates new form CustomerInfoM
      */
     public CustomerInfoM() {
         initComponents();
+        initCustomerInfo("select * from customer");
+        selectedRow = -1;
     }
 
     /**
@@ -28,13 +39,15 @@ public class CustomerInfoM extends javax.swing.JFrame {
 
         bgR = new javax.swing.JPanel();
         bgL = new javax.swing.JPanel();
-        title1 = new javax.swing.JLabel();
-        customTButton = new javax.swing.JButton();
+        title2 = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         filtre = new javax.swing.JComboBox<>();
         filtreInput = new javax.swing.JTextField();
-        title2 = new javax.swing.JLabel();
+        customTButton = new javax.swing.JButton();
+        title1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,21 +55,13 @@ public class CustomerInfoM extends javax.swing.JFrame {
 
         bgL.setBackground(new java.awt.Color(121, 203, 203));
 
-        title1.setFont(new java.awt.Font("Microsoft YaHei", 1, 24)); // NOI18N
-        title1.setText("Customer");
-
-        customTButton.setBackground(new java.awt.Color(112, 203, 203));
-        customTButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 14)); // NOI18N
-        customTButton.setText("Customer's tickets");
-        customTButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customTButtonActionPerformed(evt);
-            }
-        });
+        title2.setFont(new java.awt.Font("Microsoft YaHei", 1, 24)); // NOI18N
+        title2.setText("Information");
 
         searchButton.setBackground(new java.awt.Color(112, 203, 203));
         searchButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
         searchButton.setIcon(new javax.swing.ImageIcon("src/main/java/search.png")); // NOI18N
+        searchButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(204, 255, 255), new java.awt.Color(0, 102, 102), new java.awt.Color(0, 153, 153)));
         searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchButtonActionPerformed(evt);
@@ -66,13 +71,14 @@ public class CustomerInfoM extends javax.swing.JFrame {
         backButton.setBackground(new java.awt.Color(112, 203, 203));
         backButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
         backButton.setText("Back");
+        backButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(204, 255, 255), new java.awt.Color(0, 102, 102), new java.awt.Color(0, 153, 153)));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
             }
         });
 
-        filtre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        filtre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Find by", "Find by ID", "Find by Name" }));
 
         filtreInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,45 +86,58 @@ public class CustomerInfoM extends javax.swing.JFrame {
             }
         });
 
-        title2.setFont(new java.awt.Font("Microsoft YaHei", 1, 24)); // NOI18N
-        title2.setText("Information");
+        customTButton.setBackground(new java.awt.Color(112, 203, 203));
+        customTButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
+        customTButton.setText("Customer's tickets");
+        customTButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(204, 255, 255), new java.awt.Color(0, 102, 102), new java.awt.Color(0, 153, 153)));
+        customTButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customTButtonActionPerformed(evt);
+            }
+        });
+
+        title1.setFont(new java.awt.Font("Microsoft YaHei", 1, 24)); // NOI18N
+        title1.setText("Customer");
 
         javax.swing.GroupLayout bgLLayout = new javax.swing.GroupLayout(bgL);
         bgL.setLayout(bgLLayout);
         bgLLayout.setHorizontalGroup(
             bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
                 .addGroup(bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgLLayout.createSequentialGroup()
-                        .addComponent(filtreInput, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(customTButton, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(title2)
-                        .addComponent(filtre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addComponent(title2))
+                    .addGroup(bgLLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(customTButton, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(filtre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(bgLLayout.createSequentialGroup()
+                                .addComponent(filtreInput, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(title1)
-                .addGap(35, 35, 35))
+                .addGap(37, 37, 37))
         );
         bgLLayout.setVerticalGroup(
             bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLLayout.createSequentialGroup()
-                .addGap(88, 88, 88)
+                .addContainerGap(101, Short.MAX_VALUE)
                 .addComponent(title1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(title2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addGap(122, 122, 122)
                 .addComponent(filtre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(filtreInput)
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(filtreInput, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(customTButton)
                 .addGap(18, 18, 18)
@@ -126,17 +145,49 @@ public class CustomerInfoM extends javax.swing.JFrame {
                 .addGap(74, 74, 74))
         );
 
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Email", "Address", "ContactNumber", "PaymentInfo", "CustomerType", "DiscountPlan", "PaymentID"
+            }
+        ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table);
+
         javax.swing.GroupLayout bgRLayout = new javax.swing.GroupLayout(bgR);
         bgR.setLayout(bgRLayout);
         bgRLayout.setHorizontalGroup(
             bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgRLayout.createSequentialGroup()
                 .addComponent(bgL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 830, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 46, Short.MAX_VALUE))
         );
         bgRLayout.setVerticalGroup(
             bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bgL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgRLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,12 +205,52 @@ public class CustomerInfoM extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void customTButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customTButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_customTButtonActionPerformed
 
+    private void initCustomerInfo(String sqlStatement){
+        try (PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sqlStatement);){
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int column = resultSetMetaData.getColumnCount();
+            tableModel = (DefaultTableModel) table.getModel();
+            tableModel.setRowCount(0);
+
+            while(resultSet.next()){
+                Object[] v = new Object[9];
+
+                for(int i=1; i<=column; i++){
+                    v[0] = (resultSet.getString("CustomerID"));
+                    v[1] = (resultSet.getString("CustomerName"));
+                    v[2] = (resultSet.getString("CustomerEmail"));
+                    v[3] = (resultSet.getString("CustomerContactNumber"));
+                    v[4] = (resultSet.getString("CustomerAddress"));
+                    v[5] = (resultSet.getString("PaymentInformation"));
+                    v[6] = (resultSet.getString("CustomerType"));
+                    v[7] = (resultSet.getDouble("DiscountRate"));
+                    v[8] = (resultSet.getString("PaymentID"));
+
+                }
+                tableModel.addRow(v);
+            }
+        } catch (SQLException | ClassNotFoundException e){
+            Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
+
+        try ( Connection connection = DbConnection.getConnection()){
+            PreparedStatement preparedStatement = null;
+            if(filtreInput.getText().equals("")){
+                initCustomerInfo("select * from customer");
+            }
+            else if (filtre.getSelectedItem().equals("Find by ID")){
+                initCustomerInfo("select * from customer where CustomerID = '" + filtreInput.getText() + "'");
+            }
+            else if (filtre.getSelectedItem().equals("Find by Name")){
+                initCustomerInfo("select * from customer where CustomerName = '" + filtreInput.getText() + "'");
+            }
+        } catch (ClassNotFoundException | SQLException e){
+            Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null ,e);
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -170,8 +261,31 @@ public class CustomerInfoM extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void filtreInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtreInputActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_filtreInputActionPerformed
+
+    private void customTButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customTButtonActionPerformed
+
+        if( CustomerTicket.customerID ==0){
+            JOptionPane.showMessageDialog(null, "To view records \"SELECT CUSTOMER\")", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            CustomerTicket customerTicket = new CustomerTicket();
+            customerTicket.setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_customTButtonActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+
+        selectedRow = table.getSelectedRow();
+
+        if(TicketBooking.isInstantiated) {
+            TicketBooking.customerID = (int) tableModel.getValueAt(selectedRow, 0);
+            this.dispose();
+        }
+        //  CustomerTicket.customerID= (int) tableModel.getValueAt(selectedRow,0);
+    }//GEN-LAST:event_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -215,7 +329,9 @@ public class CustomerInfoM extends javax.swing.JFrame {
     private javax.swing.JButton customTButton;
     private javax.swing.JComboBox<String> filtre;
     private javax.swing.JTextField filtreInput;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton searchButton;
+    private javax.swing.JTable table;
     private javax.swing.JLabel title1;
     private javax.swing.JLabel title2;
     // End of variables declaration//GEN-END:variables
