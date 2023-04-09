@@ -140,13 +140,13 @@ public class Flights extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Departure ", "Destination", "Departure Time", "Arrival Time", "Flight Number", "Price", "TicketID", "CustomerID"
+                "Departure ", "Destination", "Departure Time", "Arrival Time", "Flight Number", "Price", "TicketID"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -197,7 +197,7 @@ public class Flights extends javax.swing.JFrame {
             tableModel.setRowCount(0);
 
             while (resultSet.next()){
-                Object[] a = new Object[8];
+                Object[] a = new Object[7];
                 for(int i = 0; i<columnCount; i++){
                     a[0]=resultSet.getString("Departure");
                     a[1]=resultSet.getString("Destination");
@@ -206,7 +206,6 @@ public class Flights extends javax.swing.JFrame {
                     a[4]=resultSet.getString("FlightNumber");
                     a[5]=resultSet.getString("Price");
                     a[6]=resultSet.getString("TicketID");
-                    a[7]=resultSet.getString("customerID");
                 }
                 tableModel.addRow(a);
             }
@@ -236,8 +235,7 @@ public class Flights extends javax.swing.JFrame {
                     + "    ArrivalDateTime,\n"
                     + "    FlightNumber,\n"
                     + "    Price,\n"
-                    + "    TicketID,\n"
-                    + "    customerID\n"
+                    + "    TicketID\n"
                     + ")\n"
                     + "VALUES (\n"
                     + "    '" + tableModel.getValueAt(rowCount, 0) + "',\n"
@@ -246,14 +244,13 @@ public class Flights extends javax.swing.JFrame {
                     + "    '" + tableModel.getValueAt(rowCount, 3) + "',\n"
                     + "    '" + tableModel.getValueAt(rowCount, 4) + "',\n"
                     + "    '" + tableModel.getValueAt(rowCount, 5) + "',\n"
-                    + "    '" + tableModel.getValueAt(rowCount, 6) + "',\n"
-                    + "    '" + tableModel.getValueAt(rowCount, 7) + "'\n"
+                    + "    '" + tableModel.getValueAt(rowCount, 6) + "'\n"
                     + ");");
                 preparedStatement.execute();
                 intiTicketTable();
 
             }  else {
-                tableModel.addRow(new Object[8]);
+                tableModel.addRow(new Object[7]);
                 //tableModel.setValueAt("Create New Ticket ", rowCount, 1);
 
             }
@@ -304,8 +301,6 @@ public class Flights extends javax.swing.JFrame {
                 +"', Price = '"
                 + tableModel.getValueAt(selectedRow, 5)
                 +"', TicketID = '"
-                + tableModel.getValueAt(selectedRow, 6)
-                +"', customerID = '"
                 + tableModel.getValueAt(selectedRow, 7)
                 + "' where TicketID = '" + tableModel.getValueAt(selectedRow, 6)+ "'");
 
