@@ -298,8 +298,8 @@ public class StaffADD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "The Advisor has been added successfully");
 
             dispose();
-            AdvisorDetails advisorDetails = new AdvisorDetails();
-            advisorDetails.setVisible(true);
+            BlankStock blankStock = new BlankStock();
+            blankStock.setVisible(true);
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, "Error");
         }

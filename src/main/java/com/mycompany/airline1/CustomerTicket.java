@@ -4,6 +4,14 @@
  */
 package com.mycompany.airline1;
 
+import javax.print.DocFlavor;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author airin
@@ -11,15 +19,48 @@ package com.mycompany.airline1;
 public class CustomerTicket extends javax.swing.JFrame {
 
     public static boolean isInitiated;
+    private int selectedRow;
+    private DefaultTableModel tableModel, tableModel2;
     public static int customerID;
-
     /**
      * Creates new form CustomerTicket
      */
     public CustomerTicket() {
         initComponents();
+        isInitiated = true;
+        initCustomerTicket("select * from Itinerary where CustomerID= '" + customerID + "' ");
+
     }
 
+
+    private void initCustomerTicket( String sqlStatement){
+        try(PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sqlStatement);){
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int column = resultSetMetaData.getColumnCount();
+            tableModel = (DefaultTableModel) table1.getModel();
+            tableModel.setRowCount(0);
+
+            while (resultSet.next()){
+                Vector v = new Vector();
+
+                for(int i =1; i<= column; i++){
+                    v.add(resultSet.getInt("ID"));
+                    v.add(resultSet.getString("FlightDeparture"));
+                    v.add(resultSet.getString("FlightDestination"));
+                    v.add(resultSet.getString("FlightArrivalTime"));
+                    v.add(resultSet.getString("FlightDepartureTime"));
+                    v.add(resultSet.getString("FlightNumber"));
+                    v.add(resultSet.getString("BlankblankNumber"));
+                    v.add(resultSet.getString("CustomerID"));
+
+                }
+                tableModel.addRow(v);
+            }
+        }catch (SQLException | ClassNotFoundException e){
+            Logger.getLogger(CustomerTicket.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,9 +160,14 @@ public class CustomerTicket extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
+                "ID", "Departure", "Destination", "Departure Time", "Arrival Time", "Flight Number", "Blank Number", "Customer ID"
             }
         ));
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+
+            }
+        });
         jScrollPane1.setViewportView(table1);
 
         table2.setModel(new javax.swing.table.DefaultTableModel(
@@ -135,6 +181,11 @@ public class CustomerTicket extends javax.swing.JFrame {
                 "Blank Number", "Exchange Rate", "Payment Type", "Date", "Taxes", "Refunded", "Name"
             }
         ));
+        table2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(table2);
 
         javax.swing.GroupLayout bgRLayout = new javax.swing.GroupLayout(bgR);
@@ -182,8 +233,94 @@ public class CustomerTicket extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+
+
+        try ( Connection con = DbConnection.getConnection()) {
+            PreparedStatement pst = null;
+
+            pst = con.prepareStatement("update Itinerary set FlightDeparture = '"
+                    + tableModel.getValueAt(selectedRow, 1)
+                    + "', FlightDestination = '"
+                    + tableModel.getValueAt(selectedRow, 2)
+                    + "', FlightArrivalTime = '"
+                    + tableModel.getValueAt(selectedRow, 3)
+                    + "', FlightDepartureTime = '"
+                    + tableModel.getValueAt(selectedRow, 4)
+                    + "', FlightNum = '"
+                    + tableModel.getValueAt(selectedRow, 5)
+                    + "', BlankblankNumber = '"
+                    + tableModel.getValueAt(selectedRow, 6)
+                    +  "', CustomerID = '"
+                    + tableModel.getValueAt(selectedRow, 7)
+
+                    + "' where ID = '" + tableModel.getValueAt(selectedRow, 0) + "'");
+
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Ticket details updated");
+            initCustomerTicket("select * from Itinerary where CustomerID='"+customerID+"'");
+
+            PreparedStatement pst2 = null;
+
+            pst2 = con.prepareStatement("update Payment set delayed= '"
+                    + tableModel2.getValueAt(selectedRow, 1)
+                    + "', exchangeRate = '"
+                    + tableModel2.getValueAt(selectedRow, 2)
+                    + "',type = '"
+                    + tableModel2.getValueAt(selectedRow, 3)
+                    + "', date = '"
+                    + tableModel2.getValueAt(selectedRow, 4)
+                    + "', taxes = '"
+                    + tableModel2.getValueAt(selectedRow, 5)
+                    + "', isRefunded = '"
+                    + tableModel2.getValueAt(selectedRow, 6)
+                    +  "', name = '"
+                    + tableModel2.getValueAt(selectedRow, 7)
+
+                    + "' where BlankblankNumber = '" + tableModel2.getValueAt(selectedRow, 0) + "'");
+
+            pst2.execute();
+
+
+
+            JOptionPane.showMessageDialog(null,"Payment Information updated");
+
+        } catch (ClassNotFoundException | SQLException e) {
+            Logger.getLogger(CustomerTicket.class.getName()).log(Level.SEVERE, null, e);
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
+
+
+    private void table2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table2MouseClicked
+        selectedRow = table2.getSelectedRow();
+        String blankNo = tableModel2.getValueAt(selectedRow, 6).toString();
+
+        try(PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement("select * from Payment where BlankblankNumber ='" + blankNo+"'");){
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int column = resultSetMetaData.getColumnCount();
+            tableModel2 = (DefaultTableModel) table2.getModel();
+            tableModel2.setRowCount(0);
+
+            while(resultSet.next()){
+
+                Vector v = new Vector();
+                for(int i =0; i<= column; i++){
+                    v.add(resultSet.getString("BlankblankNumber"));
+                    v.add(resultSet.getBoolean("ExchangeRate"));
+                    v.add(resultSet.getString("PaymentType"));
+                    v.add(resultSet.getString("Date"));
+                    v.add(resultSet.getString("Taxes"));
+                    v.add(resultSet.getString("Refunded"));
+                    v.add(resultSet.getString("Name"));
+
+                }
+                tableModel2.addRow(v);
+            }
+
+        } catch (SQLException | ClassNotFoundException e){
+            Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_table2MouseClicked
 
     /**
      * @param args the command line arguments

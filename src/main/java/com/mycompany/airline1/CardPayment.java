@@ -174,7 +174,7 @@ public class CardPayment extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-
+/*
         try ( Connection connection = DbConnection.getConnection()){
             int rowCount = jTable1.getRowCount();
             selectedRow = jTable1.getSelectedRow();
@@ -206,7 +206,7 @@ public class CardPayment extends javax.swing.JFrame {
         } catch ( ClassNotFoundException | SQLException e){
             Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
         }
-    }//GEN-LAST:event_updateButtonActionPerformed
+*/    }//GEN-LAST:event_updateButtonActionPerformed
 
     /**
      * @param args the command line arguments

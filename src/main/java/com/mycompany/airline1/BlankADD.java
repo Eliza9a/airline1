@@ -233,8 +233,8 @@ public class BlankADD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "The Blank has been added successfully");
 
             dispose();
-            AdvisorDetails advisorDetails = new AdvisorDetails();
-            advisorDetails.setVisible(true);
+            BlankStock blankStock = new BlankStock();
+            blankStock.setVisible(true);
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, "Error");
         }

@@ -429,7 +429,8 @@ public class BlankStock extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void initBlankStock(String sqlStatement){
-        try (PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sqlStatement);){
+        try (Connection connection = DbConnection.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             int column = resultSetMetaData.getColumnCount();
@@ -579,24 +580,26 @@ public class BlankStock extends javax.swing.JFrame {
 
     private void initStaff(String sqlStatement2) {
 
-        try (PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sqlStatement2);){
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DbConnection.getConnection();){
+
+            PreparedStatement preparedStatement1 = connection.prepareStatement(sqlStatement2);
+            ResultSet resultSet = preparedStatement1.executeQuery();
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             int column = resultSetMetaData.getColumnCount();
             tableModel = (DefaultTableModel) jTable3.getModel();
             tableModel.setRowCount(0);
 
             while(resultSet.next()){
-                Vector v = new Vector();
+                Object[] v = new Object[7];
 
                 for(int i=1; i<=column; i++){
-                    v.add(resultSet.getString("ID"));
-                    v.add(resultSet.getString("Username"));
-                    v.add(resultSet.getString("Password"));
-                    v.add(resultSet.getString("UserType"));
-                    v.add(resultSet.getString("Email"));
-                    v.add(resultSet.getString("ContactNumber"));
-                    v.add(resultSet.getString("Address"));
+                    v[0]=(resultSet.getString("ID"));
+                    v[1]=(resultSet.getString("Username"));
+                    v[2]=(resultSet.getString("Password"));
+                    v[3]=(resultSet.getString("UserType"));
+                    v[4]=(resultSet.getString("Email"));
+                    v[5]=(resultSet.getString("ContactNumber"));
+                    v[6]=(resultSet.getString("Address"));
 
                 }
                 tableModel.addRow(v);
@@ -604,6 +607,7 @@ public class BlankStock extends javax.swing.JFrame {
         } catch (SQLException | ClassNotFoundException e){
             Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
         }
+
     }
 
     private void addButtonSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonSActionPerformed
@@ -626,6 +630,7 @@ public class BlankStock extends javax.swing.JFrame {
         } catch (ClassNotFoundException|SQLException e){
             Logger.getLogger(BlankStock.class.getName()).log(Level.SEVERE, null, e);
         }
+
     }//GEN-LAST:event_deleteButtonSActionPerformed
 
     private void updateButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButton1ActionPerformed

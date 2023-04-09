@@ -4,12 +4,24 @@
  */
 package com.mycompany.airline1;
 
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  *
  * @author airin
  */
 public class BlankStockAdv extends javax.swing.JFrame {
 
+
+    static int advisorID;
+    boolean clicked = false;
+    static String oldadvisor;
+    String highestBlankAmount;
     /**
      * Creates new form BlankStockAdv
      */
@@ -159,7 +171,68 @@ public class BlankStockAdv extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void blTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blTypeFieldActionPerformed
-        // TODO add your handling code here:
+      //  int s = blTypeField.getSelectedIndex();
+
+        String blankType = blTypeField.getSelectedItem().toString();
+        char a = blankType.charAt(0); char b = blankType.charAt(1); char c = blankType.charAt(2);
+        String digits = new StringBuilder().append(a).append(b).append(c).toString();
+        int blank = Integer.parseInt(digits);
+        ArrayList advisorID = new ArrayList();
+        ArrayList blankamount = new ArrayList();
+
+        try ( Connection connection = DbConnection.getConnection()){
+            String s = blTypeField.getSelectedItem().toString();
+            String sql = null;
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet ;
+            /*while (resultSet.next()){
+                advisorID.add(resultSet.getInt(1));
+                System.out.println(resultSet.getInt(2));
+                blankamount.add(resultSet.getInt(2));
+            }
+
+            */
+            if(s=="444"){
+                sql="select count(*) from BlankStock where BlankID " +"LIKE '444%'";
+
+            }
+            if(s=="440"){
+                sql="select count(*) from BlankStock where BlankID " +"LIKE '440%'";
+
+            }
+            if(s=="420"){
+                sql="select count(*) from BlankStock where BlankID " +"LIKE '420%'";
+
+            }
+
+            if(s=="201"){
+                sql="select count(*) from BlankStock where BlankID " +"LIKE '201%'";
+
+            }
+            if(s=="101"){
+                sql="select count(*) from BlankStock where BlankID " +"LIKE '101%'";
+
+            }
+            if(s=="451"){
+                sql="select count *  from BlankStock where BlankID " +"LIKE '451%'";
+
+            }
+            if(s=="452"){
+                sql="select count * from BlankStock where BlankID " +"LIKE '452%';";
+
+            }
+
+            preparedStatement=connection.prepareStatement(sql);
+            resultSet=preparedStatement.executeQuery();
+            if(resultSet.next()){
+                String sum=resultSet.getString("count (*) ");
+                noBlField.setText(sum);
+
+            }
+
+        } catch (SQLException | ClassNotFoundException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_blTypeFieldActionPerformed
 
     private void noBlFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noBlFieldActionPerformed
