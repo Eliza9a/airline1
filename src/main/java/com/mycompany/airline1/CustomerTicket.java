@@ -28,7 +28,7 @@ public class CustomerTicket extends javax.swing.JFrame {
     public CustomerTicket() {
         initComponents();
         isInitiated = true;
-        initCustomerTicket("select * from Itinerary where CustomerID= '" + customerID + "' ");
+        initCustomerTicket("select * from Itinerary where CustomerIDF= '" + customerID + "' ");
 
     }
 
@@ -42,17 +42,17 @@ public class CustomerTicket extends javax.swing.JFrame {
             tableModel.setRowCount(0);
 
             while (resultSet.next()){
-                Vector v = new Vector();
+                Object[] v = new Object[8];
 
                 for(int i =1; i<= column; i++){
-                    v.add(resultSet.getInt("ID"));
-                    v.add(resultSet.getString("FlightDeparture"));
-                    v.add(resultSet.getString("FlightDestination"));
-                    v.add(resultSet.getString("FlightArrivalTime"));
-                    v.add(resultSet.getString("FlightDepartureTime"));
-                    v.add(resultSet.getString("FlightNumber"));
-                    v.add(resultSet.getString("BlankblankNumber"));
-                    v.add(resultSet.getString("CustomerID"));
+                    v[0] =(resultSet.getInt("ID"));
+                    v[1] =(resultSet.getString("FlightDeparture"));
+                    v[2] =(resultSet.getString("FlightDestination"));
+                    v[3] =(resultSet.getString("FlightArrivalTime"));
+                    v[4] =(resultSet.getString("FlightDepartureTime"));
+                    v[5] =(resultSet.getString("FlightNumber"));
+                    v[6] =(resultSet.getString("BlankNumberF"));
+                    v[7] =(resultSet.getString("CustomerIDF"));
 
                 }
                 tableModel.addRow(v);
@@ -248,24 +248,24 @@ public class CustomerTicket extends javax.swing.JFrame {
                     + tableModel.getValueAt(selectedRow, 4)
                     + "', FlightNum = '"
                     + tableModel.getValueAt(selectedRow, 5)
-                    + "', BlankblankNumber = '"
+                    + "', BlankNumberF = '"
                     + tableModel.getValueAt(selectedRow, 6)
-                    +  "', CustomerID = '"
+                    +  "', CustomerIDF = '"
                     + tableModel.getValueAt(selectedRow, 7)
 
                     + "' where ID = '" + tableModel.getValueAt(selectedRow, 0) + "'");
 
             pst.execute();
             JOptionPane.showMessageDialog(null,"Ticket details updated");
-            initCustomerTicket("select * from Itinerary where CustomerID='"+customerID+"'");
+            initCustomerTicket("select * from Itinerary where CustomerIDF='"+customerID+"'");
 
             PreparedStatement pst2 = null;
 
-            pst2 = con.prepareStatement("update Payment set delayed= '"
+            pst2 = con.prepareStatement("update Payment set DelayedPayment= '"
                     + tableModel2.getValueAt(selectedRow, 1)
-                    + "', exchangeRate = '"
+                    + "', ExchangeRate = '"
                     + tableModel2.getValueAt(selectedRow, 2)
-                    + "',type = '"
+                    + "',Type = '"
                     + tableModel2.getValueAt(selectedRow, 3)
                     + "', date = '"
                     + tableModel2.getValueAt(selectedRow, 4)
@@ -273,14 +273,12 @@ public class CustomerTicket extends javax.swing.JFrame {
                     + tableModel2.getValueAt(selectedRow, 5)
                     + "', isRefunded = '"
                     + tableModel2.getValueAt(selectedRow, 6)
-                    +  "', name = '"
+                    +  "', Name = '"
                     + tableModel2.getValueAt(selectedRow, 7)
 
-                    + "' where BlankblankNumber = '" + tableModel2.getValueAt(selectedRow, 0) + "'");
+                    + "' where BlankNumber = '" + tableModel2.getValueAt(selectedRow, 0) + "'");
 
             pst2.execute();
-
-
 
             JOptionPane.showMessageDialog(null,"Payment Information updated");
 
@@ -294,7 +292,7 @@ public class CustomerTicket extends javax.swing.JFrame {
         selectedRow = table2.getSelectedRow();
         String blankNo = tableModel2.getValueAt(selectedRow, 6).toString();
 
-        try(PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement("select * from Payment where BlankblankNumber ='" + blankNo+"'");){
+        try(PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement("select * from Payment where BlankNumber ='" + blankNo+"'");){
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             int column = resultSetMetaData.getColumnCount();
@@ -303,15 +301,15 @@ public class CustomerTicket extends javax.swing.JFrame {
 
             while(resultSet.next()){
 
-                Vector v = new Vector();
+                Object[] v = new Object[7];
                 for(int i =0; i<= column; i++){
-                    v.add(resultSet.getString("BlankblankNumber"));
-                    v.add(resultSet.getBoolean("ExchangeRate"));
-                    v.add(resultSet.getString("PaymentType"));
-                    v.add(resultSet.getString("Date"));
-                    v.add(resultSet.getString("Taxes"));
-                    v.add(resultSet.getString("Refunded"));
-                    v.add(resultSet.getString("Name"));
+                    v[0] =(resultSet.getString("BlankNumber"));
+                    v[1] =(resultSet.getBoolean("ExchangeRate"));
+                    v[2] =(resultSet.getString("PaymentType"));
+                    v[3] =(resultSet.getString("Date"));
+                    v[4] =(resultSet.getString("Taxes"));
+                    v[5] =(resultSet.getString("Refunded"));
+                    v[6] =(resultSet.getString("Name"));
 
                 }
                 tableModel2.addRow(v);

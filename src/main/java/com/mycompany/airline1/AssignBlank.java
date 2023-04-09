@@ -7,6 +7,7 @@ package com.mycompany.airline1;
 import com.mysql.cj.log.Log;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -20,12 +21,16 @@ public class AssignBlank extends javax.swing.JFrame {
     static int advisorID;
     boolean clicked = false;
     static String oldadvisor;
+    static String advisorName;
+    static boolean isInstantiated;
     String highestBlankAmount;
     /**
      * Creates new form AssignBlank
      */
     public AssignBlank() {
         initComponents();
+        isInstantiated=true;
+
     }
 
     /**
@@ -52,6 +57,8 @@ public class AssignBlank extends javax.swing.JFrame {
         textInput = new javax.swing.JTextField();
         blankLabel1 = new javax.swing.JLabel();
         noInput = new javax.swing.JTextField();
+        nameInput = new javax.swing.JTextField();
+        agentLabel1 = new javax.swing.JLabel();
 
         sinceLabel.setFont(new java.awt.Font("Microsoft YaHei", 0, 24)); // NOI18N
         sinceLabel.setText("Since");
@@ -177,6 +184,20 @@ public class AssignBlank extends javax.swing.JFrame {
             }
         });
 
+        nameInput.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                nameInputMouseMoved(evt);
+            }
+        });
+        nameInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameInputActionPerformed(evt);
+            }
+        });
+
+        agentLabel1.setFont(new java.awt.Font("Microsoft YaHei", 0, 24)); // NOI18N
+        agentLabel1.setText("Advisor's Name");
+
         javax.swing.GroupLayout bgRLayout = new javax.swing.GroupLayout(bgR);
         bgR.setLayout(bgRLayout);
         bgRLayout.setHorizontalGroup(
@@ -190,23 +211,29 @@ public class AssignBlank extends javax.swing.JFrame {
                         .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(blankLabel)
                             .addComponent(agentLabel)
-                            .addComponent(blankLabel1))
+                            .addComponent(blankLabel1)
+                            .addComponent(agentLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(agent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(BlankInput, 0, 209, Short.MAX_VALUE)
-                            .addComponent(noInput))))
+                            .addComponent(noInput)
+                            .addComponent(nameInput, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(144, 144, 144))
         );
         bgRLayout.setVerticalGroup(
             bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bgL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgRLayout.createSequentialGroup()
-                .addGap(160, 160, 160)
+                .addGap(71, 71, 71)
                 .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(agentLabel)
-                    .addComponent(agent, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(agent, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(agentLabel))
+                .addGap(27, 27, 27)
+                .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(agentLabel1))
+                .addGap(29, 29, 29)
                 .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(BlankInput, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blankLabel))
@@ -216,7 +243,7 @@ public class AssignBlank extends javax.swing.JFrame {
                     .addComponent(blankLabel1))
                 .addGap(54, 54, 54)
                 .addComponent(textInput, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,11 +324,11 @@ public class AssignBlank extends javax.swing.JFrame {
     }//GEN-LAST:event_agentActionPerformed
 
     private void textInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textInputActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_textInputActionPerformed
 
     private void noInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noInputActionPerformed
     }//GEN-LAST:event_noInputActionPerformed
+
 
     private void reassignButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reassignButtonActionPerformed
         if (advisorID == 0)
@@ -315,18 +342,19 @@ public class AssignBlank extends javax.swing.JFrame {
             int blanks = Integer.parseInt(quantity);
 
             try (Connection connection = DbConnection.getConnection()) {
-                PreparedStatement preparedStatement = connection.prepareStatement("select * from BlankStock where StaffID = '" + oldadvisor + "'and BlankID like '" + s + "'and BlankSold = 0; ");
+                PreparedStatement preparedStatement = connection.prepareStatement("select * from BlankStock where StaffID = '" + oldadvisor + "'and BlankID like '" + s + "%'and BlankSold = 0; ");
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
                     if (blanks != 0) {
                         String blank = resultSet.getString(1);
                         PreparedStatement resultset2 = null;
-                        resultset2 = connection.prepareStatement("update BlankStock Set StaffID ='" + advisorID + "' where StaffID = '" + oldadvisor + "'and BlankID like'" + blank + "'and BlankSold= 0;");
+                        resultset2 = connection.prepareStatement("update BlankStock Set StaffID ='" + advisorID + "' where StaffID = '" + oldadvisor + "'and BlankID like'" + blank + "' and BlankSold= 0;");
                         resultset2.execute();
                         blanks--;
                     }
                 }
+
                 if(blanks == 0)
                     JOptionPane.showMessageDialog(null, "Reassigned!");
                 int x= Integer.parseInt( highestBlankAmount);
@@ -343,10 +371,11 @@ public class AssignBlank extends javax.swing.JFrame {
     }//GEN-LAST:event_reassignButtonActionPerformed
 
     private void agentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agentMouseClicked
-     clicked = true;
+      clicked = true;
     }//GEN-LAST:event_agentMouseClicked
 
     private void BlankInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlankInputActionPerformed
+
         int s = BlankInput.getSelectedIndex();
 
         String blankType = BlankInput.getSelectedItem().toString();
@@ -358,7 +387,7 @@ public class AssignBlank extends javax.swing.JFrame {
 
         try ( Connection connection = DbConnection.getConnection()){
 
-            PreparedStatement preparedStatement = connection.prepareStatement("select StaffID, Count(*) from BlankStock where BlankID like '" + blank + " %' and BlankSold =0 and StaffID and not null GROUP BY StaffID ORDER BY COUNT (*) DESC;");
+            PreparedStatement preparedStatement = connection.prepareStatement(" select StaffID, COUNT(*) FROM BlankStock WHERE BlankID like '"+blank+"%' and BlankSold =0 and StaffID not null  GROUP BY StaffID ORDER by COUNT(*) DESC ; ");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 advisorID.add(resultSet.getInt(1));
@@ -381,6 +410,16 @@ public class AssignBlank extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_BlankInputActionPerformed
+
+    private void nameInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameInputActionPerformed
+    }//GEN-LAST:event_nameInputActionPerformed
+
+    private void nameInputMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameInputMouseMoved
+        if(AdvisorDetails.select==true){
+
+            nameInput.setText(advisorName);
+        }
+    }//GEN-LAST:event_nameInputMouseMoved
 
     /**
      * @param args the command line arguments
@@ -421,12 +460,14 @@ public class AssignBlank extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> BlankInput;
     private javax.swing.JButton agent;
     private javax.swing.JLabel agentLabel;
+    private javax.swing.JLabel agentLabel1;
     private javax.swing.JButton backButton;
     private javax.swing.JPanel bgL;
     private javax.swing.JPanel bgR;
     private javax.swing.JLabel blankLabel;
     private javax.swing.JLabel blankLabel1;
     private javax.swing.JButton confirmButton;
+    private javax.swing.JTextField nameInput;
     private javax.swing.JTextField noInput;
     private javax.swing.JButton reassignButton;
     private javax.swing.JLabel sinceLabel;

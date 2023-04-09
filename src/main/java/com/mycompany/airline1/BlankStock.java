@@ -35,6 +35,8 @@ public class BlankStock extends javax.swing.JFrame {
         initBlankStockTable();
         initBlankStock("select * from BlankStock");
         selectedRow = -1;
+
+
     }
 
     /**
@@ -636,6 +638,7 @@ public class BlankStock extends javax.swing.JFrame {
     private void updateButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButton1ActionPerformed
         try ( Connection connection = DbConnection.getConnection()){
             PreparedStatement preparedStatement = null;
+
 
             preparedStatement = connection.prepareStatement("update BlankStock set BlankSold = '"
                     + tableModel.getValueAt(selectedRow, 1)

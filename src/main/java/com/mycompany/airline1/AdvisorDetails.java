@@ -273,6 +273,12 @@ public class AdvisorDetails extends javax.swing.JFrame {
 
     private void advisorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_advisorTableMouseClicked
         selectedRow = advisorTable.getSelectedRow();
+        if(AssignBlank.isInstantiated){
+            AssignBlank.advisorID = (int) tableModel.getValueAt(selectedRow, 0);
+
+            AssignBlank.advisorName= (String) tableModel.getValueAt(selectedRow,2 ).toString();
+        }
+
     }//GEN-LAST:event_advisorTableMouseClicked
 
     private void bgRMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bgRMouseMoved

@@ -54,18 +54,18 @@ public class CustomerInfo extends javax.swing.JFrame {
             tableModel.setRowCount(0);
 
             while(resultSet.next()){
-                Vector v = new Vector();
+               Object[] v = new Object[9];
 
                 for(int i=1; i<=column; i++){
-                    v.add(resultSet.getString("CustomerID"));
-                    v.add(resultSet.getString("CustomerName"));
-                    v.add(resultSet.getString("CustomerEmail"));
-                    v.add(resultSet.getString("CustomerContactNumber"));
-                    v.add(resultSet.getString("CustomerAddress"));
-                    v.add(resultSet.getString("PaymentInformation"));
-                    v.add(resultSet.getString("CustomerType"));
-                    v.add(resultSet.getDouble("DiscountPlan"));
-                    v.add(resultSet.getString("PaymentID"));
+                    v[0] = (resultSet.getString("CustomerID"));
+                    v[1] = (resultSet.getString("CustomerName"));
+                    v[2] = (resultSet.getString("CustomerEmail"));
+                    v[3] = (resultSet.getString("CustomerContactNumber"));
+                    v[4] = (resultSet.getString("CustomerAddress"));
+                    v[5] = (resultSet.getString("PaymentInformation"));
+                    v[6] = (resultSet.getString("CustomerType"));
+                    v[7] = (resultSet.getDouble("DiscountPlan"));
+                    v[8] = (resultSet.getString("PaymentID"));
 
                 }
                 tableModel.addRow(v);
@@ -289,10 +289,47 @@ public class CustomerInfo extends javax.swing.JFrame {
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 
         try ( Connection connection = DbConnection.getConnection()){
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO customer Values (?, '?', '?', '?', '?', '?', '?', '?', '?')");
-            preparedStatement.setInt(1, nextID("customer"));
-            preparedStatement.execute();
-            initCustomerInfo("select * from customer");
+            PreparedStatement preparedStatement = connection.prepareStatement("select count(CustomerID) from customer");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            int result = resultSet.getInt("count(CustomerID)");
+            int rowCount = table.getRowCount();
+
+            if(rowCount > result){
+                rowCount--;
+
+                preparedStatement = connection.prepareStatement("INSERT INTO customer (\n"
+                        + "    CustomerID,\n"
+                        + "    CustomerName,\n"
+                        + "    CustomerEmail,\n"
+                        + "    CustomerAddress,\n"
+                        + "    CustomerContactNumber,\n"
+                        + "    PaymentInformation,\n"
+                        + "    CustomerType,\n"
+                        + "    DiscountPlan,\n"
+                        + "    PaymentID \n"
+                        + ")\n"
+                        + "VALUES (\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 0) + "',\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 1) + "',\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 2) + "',\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 3) + "',\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 4) + "',\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 5) + "',\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 6) + "',\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 7) + "',\n"
+                        + "    '" + tableModel.getValueAt(rowCount, 8) + "'\n"
+                        + ");");
+                preparedStatement.execute();
+                initCustomerInfo("select * from customer");
+
+            }  else {
+                tableModel.addRow(new Object[9]);
+
+            }
+
+
         } catch (ClassNotFoundException | SQLException e){
             Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -301,29 +338,35 @@ public class CustomerInfo extends javax.swing.JFrame {
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         try ( Connection connection = DbConnection.getConnection()){
             PreparedStatement preparedStatement = null;
+            selectedRow = table.getSelectedRow();
 
-            preparedStatement = connection.prepareStatement("update customer set CustomerName = '"
-                    + tableModel.getValueAt(selectedRow, 1)
-                    + "', CustomerEmail = '"
-                    + tableModel.getValueAt(selectedRow, 2)
-                    + "', CustomerContactNumber = '"
-                    + tableModel.getValueAt(selectedRow,3)
-                    +"', CustomerAddress = '"
-                    + tableModel.getValueAt(selectedRow, 4)
-                    +"', PaymentInformation = '"
-                    + tableModel.getValueAt(selectedRow, 5)
-                    +"', CustomerType = '"
-                    + tableModel.getValueAt(selectedRow, 6)
-                    +"', DiscountPlan = '"
-                    + tableModel.getValueAt(selectedRow, 7)
-                    +"', PaymentId = '"
-                    + tableModel.getValueAt(selectedRow, 8)
-                    + "'where CustomerID = '"
-                    + tableModel.getValueAt(selectedRow, 0)
-                    + "'");
+            if(selectedRow >=0) {
+                preparedStatement = connection.prepareStatement("update customer set CustomerName = '"
+                        + tableModel.getValueAt(selectedRow, 1)
+                        + "', CustomerEmail = '"
+                        + tableModel.getValueAt(selectedRow, 2)
+                        + "', CustomerContactNumber = '"
+                        + tableModel.getValueAt(selectedRow, 3)
+                        + "', CustomerAddress = '"
+                        + tableModel.getValueAt(selectedRow, 4)
+                        + "', PaymentInformation = '"
+                        + tableModel.getValueAt(selectedRow, 5)
+                        + "', CustomerType = '"
+                        + tableModel.getValueAt(selectedRow, 6)
+                        + "', DiscountPlan = '"
+                        + tableModel.getValueAt(selectedRow, 7)
+                        + "', PaymentId = '"
+                        + tableModel.getValueAt(selectedRow, 8)
+                        + "'where CustomerID = '"
+                        + tableModel.getValueAt(selectedRow, 0)
+                        + "'");
 
-            preparedStatement.execute();
-            initCustomerInfo("select * from customer");
+                preparedStatement.execute();
+                initCustomerInfo("select * from customer");
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a row!");
+            }
+
         } catch ( ClassNotFoundException | SQLException e){
             Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -378,7 +421,7 @@ public class CustomerInfo extends javax.swing.JFrame {
                     TicketBooking.customerID = (int) tableModel.getValueAt(selectedRow, 0);
                     this.dispose();
                 }
-                CustomerTicket.customerID= (int) tableModel.getValueAt(selectedRow,0);
+              //  CustomerTicket.customerID= (int) tableModel.getValueAt(selectedRow,0);
 
         }//GEN-LAST:event_tableMouseClicked
 
