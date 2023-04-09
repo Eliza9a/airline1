@@ -24,7 +24,10 @@ public class Alerts extends javax.swing.JFrame {
      */
     public Alerts() {
         initComponents();
-       // initAlerts("select distinct date, ID,");
+        initAlerts("SELECT DISTINCT CustomerID, CustomerName, date FROM Payment, customer "+
+                " where (Payment.DelayedPayment = 1) and (customer.CustomerName = Payment.Name)"
+                //+ "and julianday(CURRENT_DATE)-julianday(payment.date)>=30 "
+                );
     }
 
     private void initAlerts(String sqlStatement) {
@@ -41,10 +44,12 @@ public class Alerts extends javax.swing.JFrame {
                 Vector v = new Vector();
 
                 for(int i=1; i<= column; i++){
-                    v.add(resultSet.getString("CustomerID"));
-                    v.add(resultSet.getString("CustomerName"));
-                    v.add(resultSet.getString("date"));
+                    v.add(resultSet.getString("Customer.CustomerID"));
+                    v.add(resultSet.getString("Customer.CustomerName"));
+                    v.add(resultSet.getString("Payment.date"));
                 }
+
+                tableModel.addRow(v);
             }
         } catch (SQLException | ClassNotFoundException e){
             Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
