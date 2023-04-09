@@ -12,6 +12,8 @@ import javax.swing.*;
  */
 public class AdvisorMenu extends javax.swing.JFrame {
 
+
+
     /**
      * Creates new form AgentMenu
      */

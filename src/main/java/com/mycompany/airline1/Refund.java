@@ -4,6 +4,15 @@
  */
 package com.mycompany.airline1;
 
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author airin
@@ -33,8 +42,6 @@ public class Refund extends javax.swing.JFrame {
         refundButton = new javax.swing.JButton();
         recordButton = new javax.swing.JButton();
         ticketLabel = new javax.swing.JLabel();
-        passNameInput = new javax.swing.JTextField();
-        passNameLabel = new javax.swing.JLabel();
         amountLabel = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         ticketInput = new javax.swing.JTextField();
@@ -52,6 +59,7 @@ public class Refund extends javax.swing.JFrame {
         backButton.setBackground(new java.awt.Color(112, 203, 203));
         backButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
         backButton.setText("Back");
+        backButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(204, 255, 255), new java.awt.Color(0, 102, 102), new java.awt.Color(0, 153, 153)));
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -61,6 +69,7 @@ public class Refund extends javax.swing.JFrame {
         refundButton.setBackground(new java.awt.Color(112, 203, 203));
         refundButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
         refundButton.setText("Refund");
+        refundButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(204, 255, 255), new java.awt.Color(0, 102, 102), new java.awt.Color(0, 153, 153)));
         refundButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 refundButtonActionPerformed(evt);
@@ -70,6 +79,7 @@ public class Refund extends javax.swing.JFrame {
         recordButton.setBackground(new java.awt.Color(112, 203, 203));
         recordButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
         recordButton.setText("Record");
+        recordButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(204, 255, 255), new java.awt.Color(0, 102, 102), new java.awt.Color(0, 153, 153)));
         recordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 recordButtonActionPerformed(evt);
@@ -98,7 +108,7 @@ public class Refund extends javax.swing.JFrame {
             .addGroup(bgLLayout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(title)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(refundButton)
                 .addGap(57, 57, 57)
                 .addComponent(recordButton)
@@ -109,16 +119,6 @@ public class Refund extends javax.swing.JFrame {
 
         ticketLabel.setFont(new java.awt.Font("Microsoft YaHei", 0, 24)); // NOI18N
         ticketLabel.setText("Ticket ID");
-
-        passNameInput.setFont(new java.awt.Font("Microsoft YaHei", 0, 24)); // NOI18N
-        passNameInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passNameInputActionPerformed(evt);
-            }
-        });
-
-        passNameLabel.setFont(new java.awt.Font("Microsoft YaHei", 0, 24)); // NOI18N
-        passNameLabel.setText("Passenger Name");
 
         amountLabel.setFont(new java.awt.Font("Microsoft YaHei", 0, 24)); // NOI18N
         amountLabel.setText("Amount");
@@ -149,15 +149,10 @@ public class Refund extends javax.swing.JFrame {
                 .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(ticketLabel)
-                    .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(bgRLayout.createSequentialGroup()
-                            .addComponent(amountLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(amountInput, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(bgRLayout.createSequentialGroup()
-                            .addComponent(passNameLabel)
-                            .addGap(53, 53, 53)
-                            .addComponent(passNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(bgRLayout.createSequentialGroup()
+                        .addComponent(amountLabel)
+                        .addGap(153, 153, 153)
+                        .addComponent(amountInput, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(107, Short.MAX_VALUE))
             .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgRLayout.createSequentialGroup()
@@ -171,11 +166,7 @@ public class Refund extends javax.swing.JFrame {
             .addGroup(bgRLayout.createSequentialGroup()
                 .addGap(148, 148, 148)
                 .addComponent(ticketLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passNameLabel)
-                    .addComponent(passNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(amountLabel)
                     .addComponent(amountInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -205,7 +196,19 @@ public class Refund extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void recordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordButtonActionPerformed
-        // TODO add your handling code here:
+
+        try (Connection connection = DbConnection.getConnection()){
+            LocalDate localDate = LocalDate.now();
+
+
+            String logFile = "Refund" + localDate  + " " + "logfile";
+
+            ProcessBuilder processBuilder = new ProcessBuilder("Notepad.exe", logFile);
+            processBuilder.start();
+
+            } catch ( Exception e) {
+            System.out.println("Error");
+        }
     }//GEN-LAST:event_recordButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -216,19 +219,28 @@ public class Refund extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void refundButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refundButtonActionPerformed
-        // TODO add your handling code here:
+        String blank = ticketInput.getText();
+
+        try (Connection connection = DbConnection.getConnection()){
+
+            PreparedStatement preparedStatement = connection.prepareStatement("update Payment set isRefunded = '1' where BlankNumber = '" + blank + "'");
+            preparedStatement.execute();
+
+            PreparedStatement preparedStatement1 = null;
+            preparedStatement1 = connection.prepareStatement("delete from Itinerary where BlankNumberF ='" + blank + "'");
+            preparedStatement1.execute();
+
+
+            JOptionPane.showMessageDialog(null, "Refunded successfully");
+        } catch (ClassNotFoundException | SQLException e){
+            Logger.getLogger(TicketBooking.class.getName()).log(Level.SEVERE, null, e);
+        }
     }//GEN-LAST:event_refundButtonActionPerformed
 
-    private void passNameInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passNameInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passNameInputActionPerformed
-
     private void ticketInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ticketInputActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_ticketInputActionPerformed
 
     private void amountInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountInputActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_amountInputActionPerformed
 
     /**
@@ -273,8 +285,6 @@ public class Refund extends javax.swing.JFrame {
     private javax.swing.JPanel bgL;
     private javax.swing.JPanel bgR;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField passNameInput;
-    private javax.swing.JLabel passNameLabel;
     private javax.swing.JButton recordButton;
     private javax.swing.JButton refundButton;
     private javax.swing.JTextField ticketInput;
