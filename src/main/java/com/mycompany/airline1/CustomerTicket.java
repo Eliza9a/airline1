@@ -38,27 +38,27 @@ public class CustomerTicket extends javax.swing.JFrame {
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             int column = resultSetMetaData.getColumnCount();
-            tableModel = (DefaultTableModel) table1.getModel();
+            tableModel = (DefaultTableModel) table2.getModel();
             tableModel.setRowCount(0);
 
             while (resultSet.next()){
-                Object[] v = new Object[8];
+                Vector v = new Vector();
 
                 for(int i =1; i<= column; i++){
-                    v[0] =(resultSet.getInt("ID"));
-                    v[1] =(resultSet.getString("FlightDeparture"));
-                    v[2] =(resultSet.getString("FlightDestination"));
-                    v[3] =(resultSet.getString("FlightArrivalTime"));
-                    v[4] =(resultSet.getString("FlightDepartureTime"));
-                    v[5] =(resultSet.getString("FlightNumber"));
-                    v[6] =(resultSet.getString("BlankNumberF"));
-                    v[7] =(resultSet.getString("CustomerIDF"));
+                    v.add(resultSet.getInt("ID"));
+                    v.add(resultSet.getString("FlightDeparture"));
+                    v.add(resultSet.getString("FlightDestination"));
+                    v.add(resultSet.getString("FlightArrivalTime"));
+                    v.add(resultSet.getString("FlightDepartureTime"));
+                    v.add(resultSet.getString("FlightNumber"));
+                    v.add(resultSet.getString("BlankNumberF"));
+                    v.add(resultSet.getString("CustomerIDF"));
 
                 }
                 tableModel.addRow(v);
             }
         }catch (SQLException | ClassNotFoundException e){
-            Logger.getLogger(CustomerTicket.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     /**
@@ -296,20 +296,20 @@ public class CustomerTicket extends javax.swing.JFrame {
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             int column = resultSetMetaData.getColumnCount();
-            tableModel2 = (DefaultTableModel) table2.getModel();
+            tableModel2 = (DefaultTableModel) table1.getModel();
             tableModel2.setRowCount(0);
 
             while(resultSet.next()){
 
-                Object[] v = new Object[7];
+                Vector v = new Vector();
                 for(int i =0; i<= column; i++){
-                    v[0] =(resultSet.getString("BlankNumber"));
-                    v[1] =(resultSet.getBoolean("ExchangeRate"));
-                    v[2] =(resultSet.getString("PaymentType"));
-                    v[3] =(resultSet.getString("Date"));
-                    v[4] =(resultSet.getString("Taxes"));
-                    v[5] =(resultSet.getString("Refunded"));
-                    v[6] =(resultSet.getString("Name"));
+                    v.add(resultSet.getString("BlankNumber"));
+                    v.add(resultSet.getBoolean("ExchangeRate"));
+                    v.add(resultSet.getString("PaymentType"));
+                    v.add(resultSet.getString("Date"));
+                    v.add(resultSet.getString("Taxes"));
+                    v.add(resultSet.getString("Refunded"));
+                    v.add(resultSet.getString("Name"));
 
                 }
                 tableModel2.addRow(v);

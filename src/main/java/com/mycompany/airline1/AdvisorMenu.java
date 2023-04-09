@@ -261,9 +261,9 @@ public class AdvisorMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_flightsButton1ActionPerformed
 
     private void currencyExButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currencyExButtonActionPerformed
-        Exchange exchange = new Exchange();
+        ExchangeR exchange = new ExchangeR();
         exchange.setVisible(true);
-        exchange.setDefaultCloseOperation(Exchange.EXIT_ON_CLOSE);
+        exchange.setDefaultCloseOperation(ExchangeR.EXIT_ON_CLOSE);
         dispose();
     }//GEN-LAST:event_currencyExButtonActionPerformed
 

@@ -63,15 +63,13 @@ public class Login extends javax.swing.JFrame {
         logo = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
-        teamIcon = new javax.swing.JLabel();
         bgR = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         pass = new javax.swing.JLabel();
         user = new javax.swing.JLabel();
         userField = new javax.swing.JTextField();
         passField = new javax.swing.JPasswordField();
-        idButton = new javax.swing.JLabel();
-        idField = new javax.swing.JTextField();
+        teamIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,7 +78,7 @@ public class Login extends javax.swing.JFrame {
 
         bgL.setBackground(new java.awt.Color(112, 203, 203));
 
-        logo.setIcon(new javax.swing.ImageIcon("src/main/java/appLogo.png")); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/appLogo.png"))); // NOI18N
         logo.setText("jLabel1");
 
         jLabel8.setFont(new java.awt.Font("Microsoft YaHei", 1, 18)); // NOI18N
@@ -100,9 +98,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        teamIcon.setIcon(new javax.swing.ImageIcon("src/main/java/teamLogo.png")); // NOI18N
-        teamIcon.setText("2023 The Code Icons. Team 10.");
-
         javax.swing.GroupLayout bgLLayout = new javax.swing.GroupLayout(bgL);
         bgL.setLayout(bgLLayout);
         bgLLayout.setHorizontalGroup(
@@ -118,13 +113,8 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(67, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLLayout.createSequentialGroup()
-                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(79, 79, 79))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLLayout.createSequentialGroup()
-                        .addComponent(teamIcon)
-                        .addGap(96, 96, 96))))
+                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79))
         );
         bgLLayout.setVerticalGroup(
             bgLLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,9 +125,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(teamIcon)
-                .addContainerGap())
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         bgR.setBackground(new java.awt.Color(204, 255, 255));
@@ -158,60 +146,44 @@ public class Login extends javax.swing.JFrame {
         passField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         passField.setText("jPasswordField1");
 
-        idButton.setFont(new java.awt.Font("Microsoft YaHei Light", 1, 24)); // NOI18N
-        idButton.setText("ID");
-
-        idField.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
-        idField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idFieldActionPerformed(evt);
-            }
-        });
+        teamIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/teamLogo.png"))); // NOI18N
+        teamIcon.setText("2023 The Code Icons. Team 10.");
 
         javax.swing.GroupLayout bgRLayout = new javax.swing.GroupLayout(bgR);
         bgR.setLayout(bgRLayout);
         bgRLayout.setHorizontalGroup(
             bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgRLayout.createSequentialGroup()
+                .addGap(59, 59, 59)
                 .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bgRLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel3))
-                    .addGroup(bgRLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(user))
-                    .addGroup(bgRLayout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(idButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgRLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pass)))
-                .addGap(98, 98, 98)
+                    .addComponent(jLabel3)
+                    .addComponent(pass)
+                    .addComponent(user))
+                .addGap(88, 88, 88)
                 .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(53, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgRLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(teamIcon)
+                .addGap(167, 167, 167))
         );
         bgRLayout.setVerticalGroup(
             bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgRLayout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(183, 183, 183)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(user)
                     .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(72, 72, 72)
-                .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bgRLayout.createSequentialGroup()
-                        .addComponent(pass)
-                        .addGap(92, 92, 92)
-                        .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(idButton)))
+                .addGap(74, 74, 74)
+                .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pass)
                     .addComponent(passField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(teamIcon))
         );
 
         javax.swing.GroupLayout lineLayout = new javax.swing.GroupLayout(line);
@@ -317,10 +289,6 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idFieldActionPerformed
-
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
 
@@ -364,8 +332,6 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgL;
     private javax.swing.JPanel bgR;
-    private javax.swing.JLabel idButton;
-    private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel line;

@@ -54,18 +54,18 @@ public class CustomerInfo extends javax.swing.JFrame {
             tableModel.setRowCount(0);
 
             while(resultSet.next()){
-               Object[] v = new Object[9];
+               Vector v = new Vector();
 
                 for(int i=1; i<=column; i++){
-                    v[0] = (resultSet.getString("CustomerID"));
-                    v[1] = (resultSet.getString("CustomerName"));
-                    v[2] = (resultSet.getString("CustomerEmail"));
-                    v[3] = (resultSet.getString("CustomerContactNumber"));
-                    v[4] = (resultSet.getString("CustomerAddress"));
-                    v[5] = (resultSet.getString("PaymentInformation"));
-                    v[6] = (resultSet.getString("CustomerType"));
-                    v[7] = (resultSet.getDouble("DiscountRate"));
-                    v[8] = (resultSet.getString("PaymentID"));
+                    v.add(resultSet.getString("CustomerID"));
+                    v.add(resultSet.getString("CustomerName"));
+                    v.add(resultSet.getString("CustomerEmail"));
+                    v.add(resultSet.getString("CustomerContactNumber"));
+                    v.add(resultSet.getString("CustomerAddress"));
+                    v.add(resultSet.getString("PaymentInformation"));
+                    v.add(resultSet.getString("CustomerType"));
+                    v.add(resultSet.getDouble("DiscountRate"));
+                    v.add(resultSet.getString("PaymentID"));
 
                 }
                 tableModel.addRow(v);
@@ -421,7 +421,7 @@ public class CustomerInfo extends javax.swing.JFrame {
                     TicketBooking.customerID = (int) tableModel.getValueAt(selectedRow, 0);
                     this.dispose();
                 }
-              //  CustomerTicket.customerID= (int) tableModel.getValueAt(selectedRow,0);
+                String value = String.valueOf(tableModel.getValueAt(selectedRow,0));
 
         }//GEN-LAST:event_tableMouseClicked
 

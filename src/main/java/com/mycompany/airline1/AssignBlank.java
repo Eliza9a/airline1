@@ -287,7 +287,7 @@ public class AssignBlank extends javax.swing.JFrame {
 
                     if(chosen == stock && blanks !=0 ){
                         PreparedStatement preparedStatement1 = null;
-                        preparedStatement1 = connection.prepareStatement("UPDATE BlankStock SET StaffID = '"+ advisorID + "'where blankID = '"+ blankk + "' ");
+                        preparedStatement1 = connection.prepareStatement("UPDATE BlankStock SET StaffID = '"+ advisorID + "'where BlankID = '"+ blankk + "' ");
                         preparedStatement1.execute();
 
                         blanks--;
@@ -302,8 +302,8 @@ public class AssignBlank extends javax.swing.JFrame {
                 }
                 else if(blanks == 0){
                     JOptionPane.showMessageDialog(null, " "+ initialBlanks + " blanks assigned");
-                }
-                dispose();
+
+                dispose();}
             } catch (SQLException | ClassNotFoundException e) {
                 JOptionPane.showMessageDialog(null, e);
             }

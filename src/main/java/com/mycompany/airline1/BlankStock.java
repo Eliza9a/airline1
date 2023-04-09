@@ -10,7 +10,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.DocFlavor;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,11 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BlankStock extends javax.swing.JFrame {
 
-    PreparedStatement preparedSt = null;
-    Connection connection = null;
-    ResultSet resultSet = null;
-    LocalDateTime localDateTime;
-    private DefaultTableModel tableModel;
+    private DefaultTableModel tableModel, tableModel1;
     private int selectedRow;
 
     /**
@@ -32,11 +28,8 @@ public class BlankStock extends javax.swing.JFrame {
     public BlankStock() {
         initComponents();
         initStaff("select * from login");
-        initBlankStockTable();
         initBlankStock("select * from BlankStock");
         selectedRow = -1;
-
-
     }
 
     /**
@@ -447,7 +440,6 @@ public class BlankStock extends javax.swing.JFrame {
                     v.add(resultSet.getString("BlankSold"));
                     v.add(resultSet.getString("StaffID"));
                     v.add(resultSet.getString("DateReceived"));
-                    //   v.add(resultSet.getString(""));
 
                 }
                 tableModel.addRow(v);
@@ -461,25 +453,30 @@ public class BlankStock extends javax.swing.JFrame {
 
         try(Connection connection = DbConnection.getConnection()) {
             PreparedStatement preparedStatement = null;
+            selectedRow =  jTable3.getSelectedRow();
 
+            if(selectedRow >=0){
             preparedStatement = connection.prepareStatement("update login set Username = '"
-                    + tableModel.getValueAt(selectedRow, 1)
+                    + tableModel1.getValueAt(selectedRow, 1)
                     + "', Password= '"
-                    + tableModel.getValueAt(selectedRow, 2)
+                    + tableModel1.getValueAt(selectedRow, 2)
                     + "', Username= '"
-                    + tableModel.getValueAt(selectedRow, 3)
+                    + tableModel1.getValueAt(selectedRow, 3)
                     + "', Email= '"
-                    + tableModel.getValueAt(selectedRow, 4)
+                    + tableModel1.getValueAt(selectedRow, 4)
                     + "', ContactNumber= '"
-                    + tableModel.getValueAt(selectedRow, 5)
+                    + tableModel1.getValueAt(selectedRow, 5)
                     + "', Address= '"
-                    + tableModel.getValueAt(selectedRow, 6)
+                    + tableModel1.getValueAt(selectedRow, 6)
                     + "' where ID = '"
-                    + tableModel.getValueAt(selectedRow, 0) + "'"
+                    + tableModel1.getValueAt(selectedRow, 0) + "'"
             );
 
             preparedStatement.execute();
-            initBlankStock("select * from login'");
+            initStaff("select * from login");
+            }else {
+                JOptionPane.showMessageDialog(null, "Please select a row!");
+            }
 
         } catch (SQLException | ClassNotFoundException e){
             JOptionPane.showMessageDialog(null, "Error");
@@ -547,10 +544,10 @@ public class BlankStock extends javax.swing.JFrame {
             if(selectedRow >= 0){
                 PreparedStatement preparedStatement = connection.prepareStatement("delete from BlankStock where BlankID =' " + tableModel.getValueAt(selectedRow,0)+ "'");
                 preparedStatement.execute();
-                initBlankStockTable();
+                initBlankStock("select * from BlankStock");
             }
             else {
-                JOptionPane.showMessageDialog(null, "Please select a row!");
+                JOptionPane.showMessageDialog(null, "Please select a row to be deleted!");
             }
         } catch (ClassNotFoundException|SQLException e){
             Logger.getLogger(BlankStock.class.getName()).log(Level.SEVERE, null, e);
@@ -588,23 +585,23 @@ public class BlankStock extends javax.swing.JFrame {
             ResultSet resultSet = preparedStatement1.executeQuery();
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             int column = resultSetMetaData.getColumnCount();
-            tableModel = (DefaultTableModel) jTable3.getModel();
-            tableModel.setRowCount(0);
+            tableModel1 = (DefaultTableModel) jTable3.getModel();
+            tableModel1.setRowCount(0);
 
             while(resultSet.next()){
-                Object[] v = new Object[7];
+                Vector v = new Vector();
 
                 for(int i=1; i<=column; i++){
-                    v[0]=(resultSet.getString("ID"));
-                    v[1]=(resultSet.getString("Username"));
-                    v[2]=(resultSet.getString("Password"));
-                    v[3]=(resultSet.getString("UserType"));
-                    v[4]=(resultSet.getString("Email"));
-                    v[5]=(resultSet.getString("ContactNumber"));
-                    v[6]=(resultSet.getString("Address"));
+                    v.add(resultSet.getString("ID"));
+                    v.add(resultSet.getString("Username"));
+                    v.add(resultSet.getString("Password"));
+                    v.add(resultSet.getString("UserType"));
+                    v.add(resultSet.getString("Email"));
+                    v.add(resultSet.getString("ContactNumber"));
+                    v.add(resultSet.getString("Address"));
 
                 }
-                tableModel.addRow(v);
+                tableModel1.addRow(v);
             }
         } catch (SQLException | ClassNotFoundException e){
             Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
@@ -622,39 +619,46 @@ public class BlankStock extends javax.swing.JFrame {
         try ( Connection connection = DbConnection.getConnection()){
             selectedRow = jTable3.getSelectedRow();
             if(selectedRow >= 0){
-                PreparedStatement preparedStatement = connection.prepareStatement("delete from login where ID =' " + tableModel.getValueAt(selectedRow,0)+ "'");
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from login where ID =' " + tableModel1.getValueAt(selectedRow,0)+ "'");
                 preparedStatement.execute();
-                initBlankStockTable();
+                initStaff("select * from login");
             }
             else {
-                JOptionPane.showMessageDialog(null, "Please select a row!");
+                JOptionPane.showMessageDialog(null, "Please select a row to be deleted!");
             }
         } catch (ClassNotFoundException|SQLException e){
             Logger.getLogger(BlankStock.class.getName()).log(Level.SEVERE, null, e);
         }
-
     }//GEN-LAST:event_deleteButtonSActionPerformed
 
     private void updateButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButton1ActionPerformed
-        try ( Connection connection = DbConnection.getConnection()){
+
+
+        try(Connection connection = DbConnection.getConnection()) {
             PreparedStatement preparedStatement = null;
+            selectedRow =  jTable1.getSelectedRow();
 
+            if(selectedRow >=0){
+                preparedStatement = connection.prepareStatement("update BlankStock set BlankSold = '"
+                        + tableModel.getValueAt(selectedRow, 1)
+                        + "', StaffID= '"
+                        + tableModel.getValueAt(selectedRow, 2)
+                        + "', DateReceived= '"
+                        + tableModel.getValueAt(selectedRow, 3)
+                        + "' where BlankID = '"
+                        + tableModel.getValueAt(selectedRow, 0) + "'"
+                );
 
-            preparedStatement = connection.prepareStatement("update BlankStock set BlankSold = '"
-                    + tableModel.getValueAt(selectedRow, 1)
-                    + "', StaffID = '"
-                    + tableModel.getValueAt(selectedRow, 2)
-                    + "', DateReceived = '"
-                    + tableModel.getValueAt(selectedRow,3)
-                    + "'where BlankID = '"
-                    + tableModel.getValueAt(selectedRow, 0)
-                    + "'");
+                preparedStatement.execute();
+                initBlankStock("select * from BlankStock");
+            }else {
+                JOptionPane.showMessageDialog(null, "Please select a row!");
+            }
 
-            preparedStatement.execute();
-            initBlankStock("select * from BlankStock");
-        } catch ( ClassNotFoundException | SQLException e) {
-            Logger.getLogger(CustomerInfo.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException | ClassNotFoundException e){
+            JOptionPane.showMessageDialog(null, "Error");
         }
+
     }//GEN-LAST:event_updateButton1ActionPerformed
 
     private void initBlankStockTable() {
