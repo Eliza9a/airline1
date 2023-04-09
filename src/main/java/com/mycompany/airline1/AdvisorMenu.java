@@ -41,6 +41,7 @@ public class AdvisorMenu extends javax.swing.JFrame {
         ticketsButton = new javax.swing.JButton();
         refundButton = new javax.swing.JButton();
         flightsButton1 = new javax.swing.JButton();
+        currencyExButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,7 +50,7 @@ public class AdvisorMenu extends javax.swing.JFrame {
 
         bgL.setBackground(new java.awt.Color(112, 203, 203));
 
-        logo.setText("jLabel1");
+        logo.setIcon(new javax.swing.ImageIcon("src/main/java/appLogo.png")); // NOI18N
 
         title.setFont(new java.awt.Font("Microsoft YaHei", 1, 30)); // NOI18N
         title.setText("Travel Advisor");
@@ -108,7 +109,7 @@ public class AdvisorMenu extends javax.swing.JFrame {
 
         ticketsButton.setBackground(new java.awt.Color(112, 203, 203));
         ticketsButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
-        ticketsButton.setText("Tickets");
+        ticketsButton.setText("Ticket Sale");
         ticketsButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(204, 255, 255), new java.awt.Color(0, 102, 102), new java.awt.Color(0, 153, 153)));
         ticketsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +137,16 @@ public class AdvisorMenu extends javax.swing.JFrame {
             }
         });
 
+        currencyExButton.setBackground(new java.awt.Color(112, 203, 203));
+        currencyExButton.setFont(new java.awt.Font("Microsoft YaHei", 0, 18)); // NOI18N
+        currencyExButton.setText("Currency Exchange Rates");
+        currencyExButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 204, 204), new java.awt.Color(204, 255, 255), new java.awt.Color(0, 102, 102), new java.awt.Color(0, 153, 153)));
+        currencyExButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                currencyExButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout bgRLayout = new javax.swing.GroupLayout(bgR);
         bgR.setLayout(bgRLayout);
         bgRLayout.setHorizontalGroup(
@@ -144,27 +155,33 @@ public class AdvisorMenu extends javax.swing.JFrame {
                 .addGap(59, 59, 59)
                 .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(refundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ticketsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bgRLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(381, 381, 381))
+                        .addGap(121, 121, 121)
+                        .addComponent(ticketsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(flightsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cutomInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cutomInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(currencyExButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(164, Short.MAX_VALUE))
         );
         bgRLayout.setVerticalGroup(
             bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgRLayout.createSequentialGroup()
-                .addGap(101, 101, 101)
+                .addGap(110, 110, 110)
                 .addComponent(refundButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(flightsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(cutomInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
-                .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(ticketsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(flightsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cutomInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bgRLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bgRLayout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addComponent(jLabel2))
+                    .addGroup(bgRLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(currencyExButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ticketsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -243,6 +260,13 @@ public class AdvisorMenu extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_flightsButton1ActionPerformed
 
+    private void currencyExButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currencyExButtonActionPerformed
+        Exchange exchange = new Exchange();
+        exchange.setVisible(true);
+        exchange.setDefaultCloseOperation(Exchange.EXIT_ON_CLOSE);
+        dispose();
+    }//GEN-LAST:event_currencyExButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -282,6 +306,7 @@ public class AdvisorMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgL;
     private javax.swing.JPanel bgR;
+    private javax.swing.JButton currencyExButton;
     private javax.swing.JButton cutomInfoButton;
     private javax.swing.JButton flightsButton1;
     private javax.swing.JLabel jLabel2;
